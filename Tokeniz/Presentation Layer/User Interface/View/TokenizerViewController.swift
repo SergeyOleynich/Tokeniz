@@ -13,7 +13,8 @@ private enum Constants {
 }
 
 final class TokenizerViewController: UIViewController {
-    
+    var output: TokenizerViewOutput!
+
     private lazy var tokenizerInputView: UIView = {
         let view = TokenizerView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -53,6 +54,12 @@ final class TokenizerViewController: UIViewController {
     }
 }
 
+// MARK: - TokenizerViewInput
+
+extension TokenizerViewController: TokenizerViewInput {
+
+}
+
 // MARK: - UITextViewDelegate
 
 extension TokenizerViewController: UITextViewDelegate {
@@ -60,10 +67,11 @@ extension TokenizerViewController: UITextViewDelegate {
 
         let currentText = textView.text ?? ""
         guard let stringRange = Range(range, in: currentText) else { return false }
+        
         let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
 
-        print(updatedText)
-        
+        output.onTextDidChanged(text: updatedText)
+
         return true
     }
 }

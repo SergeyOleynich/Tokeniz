@@ -16,9 +16,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
 
+        let rootViewController = TokenizerViewController()
+        let presenter = TokenizerPresenter()
+
+        presenter.viewInput = rootViewController
+        rootViewController.output = presenter
+
+
         window?.windowScene = windowScene
         window?.rootViewController = UINavigationController(
-            rootViewController: TokenizerViewController())
+            rootViewController: rootViewController)
         window?.makeKeyAndVisible()
     }
 }
