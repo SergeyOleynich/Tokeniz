@@ -15,51 +15,24 @@ private enum Constants {
 final class TokenizerViewController: UIViewController {
     
     private lazy var tokenizerInputView: UIView = {
-        let stackView = UIStackView(frame: .zero)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.alignment = .fill
-        stackView.spacing = Constants.elementSpacing
+        let view = TokenizerView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
 
-        let titleLabel = UILabel(frame: .zero)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.text = "Input"
+        view.spacing = Constants.elementSpacing
+        view.title = "Input"
 
-        stackView.addArrangedSubview(titleLabel)
-
-        let inputTextView = UITextView(frame: .zero)
-        inputTextView.translatesAutoresizingMaskIntoConstraints = false
-        inputTextView.layer.borderWidth = 1.0
-        inputTextView.layer.borderColor = UIColor.label.cgColor
-
-        stackView.addArrangedSubview(inputTextView)
-
-        return stackView
+        return view
     }()
 
     private lazy var tokenizerOutputView: UIView = {
-        let stackView = UIStackView(frame: .zero)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.alignment = .fill
-        stackView.spacing = Constants.elementSpacing
+        let view = TokenizerView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
 
-        let titleLabel = UILabel(frame: .zero)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.text = "Output"
+        view.spacing = Constants.elementSpacing
+        view.title = "Output"
+        view.isUserInteractionEnabled = false
 
-        stackView.addArrangedSubview(titleLabel)
-
-        let outputTextView = UITextView(frame: .zero)
-        outputTextView.translatesAutoresizingMaskIntoConstraints = false
-        outputTextView.layer.borderWidth = 1.0
-        outputTextView.layer.borderColor = UIColor.label.cgColor
-        outputTextView.isEditable = false
-        outputTextView.isUserInteractionEnabled = false
-
-        stackView.addArrangedSubview(outputTextView)
-
-        return stackView
+        return view
     }()
 
     override func loadView() {
@@ -77,6 +50,21 @@ final class TokenizerViewController: UIViewController {
         super.viewDidLoad()
 
         setupNavigationBar()
+    }
+}
+
+// MARK: - UITextViewDelegate
+
+extension TokenizerViewController: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+
+        let currentText = textView.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
+
+        print(updatedText)
+        
+        return true
     }
 }
 
