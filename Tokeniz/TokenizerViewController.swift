@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  TokenizerViewController.swift
 //  Tokeniz
 //
 //  Created by Serhii Oleinich on 11.01.2024.
@@ -7,13 +7,11 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class TokenizerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+
+        view.backgroundColor = .red
     }
-
-
 }
-
