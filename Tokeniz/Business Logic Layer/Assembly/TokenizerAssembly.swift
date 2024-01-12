@@ -14,7 +14,7 @@ protocol TokenizerAssembly {
 
     var coordinator: TokenizerCoordinator { get }
     var moduleInput: (viewController: UIViewController, presenter: TokenizerPresenter) { get }
-    var languageInput: UIViewController { get }
+    func languageInput(for language: Language, completion: @escaping ((Language) -> Void)) -> UIViewController
 }
 
 // MARK: - Implementation
@@ -40,19 +40,19 @@ struct TokenizerAssemblyImpl: TokenizerAssembly {
         return (viewController, presenter)
     }
 
-    var languageInput: UIViewController {
+    func languageInput(for language: Language, completion: @escaping ((Language) -> Void)) -> UIViewController {
         let alert = UIAlertController(
             title: "Language",
             message: "Please Select an Option",
             preferredStyle: .actionSheet)
 
         let englishAction = UIAlertAction(
-            title: "✔︎ English",
-            style: .default) { _ in }
+            title: "\(language == .english ? "✔︎ " : "") English",
+            style: .default) { _ in completion(.english) }
 
         let spanishAction = UIAlertAction(
-            title: "Spanish",
-            style: .default) { _ in }
+            title: "\(language == .spanish ? "✔︎ " : "") Spanish",
+            style: .default) { _ in completion(.spanish) }
 
         let cancelAction = UIAlertAction(
             title: "Cancel",

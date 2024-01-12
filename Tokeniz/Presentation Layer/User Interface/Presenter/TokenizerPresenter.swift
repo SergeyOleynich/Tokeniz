@@ -11,7 +11,7 @@ final class TokenizerPresenter {
     weak var viewInput: TokenizerViewInput?
     var router: TokenizerRouter?
 
-    private let tokenizer: Tokenizer
+    private var tokenizer: Tokenizer
     private let displayItemProvider: TokenDisplayItemProvider
 
     init(tokenizer: Tokenizer, displayItemProvider: TokenDisplayItemProvider) {
@@ -31,6 +31,14 @@ extension TokenizerPresenter: TokenizerViewOutput {
     }
 
     func onLanguageTapped() {
-        router?.presentLanguageSelection()
+        router?.presentLanguageSelection(selectedLanguage: tokenizer.language) {[weak self] language in
+            if self?.tokenizer.language != language {
+                self?.viewInput?.didSelectLanguage(language: language)
+            } else {
+                self?.viewInput?.didDismissLanguageSelection()
+            }
+
+            self?.tokenizer.language = language
+        }
     }
 }

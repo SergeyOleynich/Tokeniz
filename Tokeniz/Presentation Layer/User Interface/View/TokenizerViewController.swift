@@ -15,13 +15,13 @@ private enum Constants {
 final class TokenizerViewController: UIViewController {
     var output: TokenizerViewOutput!
 
-    private lazy var tokenizerInputView: UIView = {
+    private lazy var tokenizerInputView: TokenizerView = {
         let view = TokenizerView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
 
         view.delegate = self
         view.spacing = Constants.elementSpacing
-        view.title = "Input"
+        view.title = "Input English"
 
         return view
     }()
@@ -61,6 +61,21 @@ final class TokenizerViewController: UIViewController {
 extension TokenizerViewController: TokenizerViewInput {
     func didProcessItem(item: TokenDisplayModel) {
         tokenizerOutputView.text = item.displayString
+    }
+
+    func didSelectLanguage(language: Language) {
+        switch language {
+        case .english: tokenizerInputView.title = "Input English"
+        case .spanish: tokenizerInputView.title = "Input Spanish"
+        }
+
+        tokenizerInputView.text = ""
+        tokenizerOutputView.text = ""
+    }
+
+    func didDismissLanguageSelection() {
+        tokenizerInputView.text = ""
+        tokenizerOutputView.text = ""
     }
 }
 

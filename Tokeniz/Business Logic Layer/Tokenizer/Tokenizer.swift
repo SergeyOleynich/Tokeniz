@@ -8,5 +8,7 @@
 import Foundation
 
 protocol Tokenizer {
+    var language: Language { get set }
+    
     func tokenize(text: String) -> [String]
 }

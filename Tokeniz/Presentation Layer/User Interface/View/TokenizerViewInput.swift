@@ -9,4 +9,7 @@ import Foundation
 
 protocol TokenizerViewInput: AnyObject {
     func didProcessItem(item: TokenDisplayModel)
+    
+    func didSelectLanguage(language: Language)
+    func didDismissLanguageSelection()
 }

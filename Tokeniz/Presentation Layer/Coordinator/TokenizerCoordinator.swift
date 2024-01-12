@@ -13,7 +13,9 @@ protocol TokenizerCoordinator {
 }
 
 protocol TokenizerRouter {
-    func presentLanguageSelection()
+    func presentLanguageSelection(
+        selectedLanguage: Language,
+        completion: @escaping ((Language) -> Void))
 }
 
 // MARK: - Implementation
@@ -37,8 +39,12 @@ struct TokenizerCoordinatorImpl: TokenizerCoordinator {
 // MARK: - TokenizerRouter
 
 extension TokenizerCoordinatorImpl: TokenizerRouter {
-    func presentLanguageSelection() {
-        let languageInput = assembly.languageInput
+    func presentLanguageSelection(
+        selectedLanguage: Language,
+        completion: @escaping ((Language) -> Void)) {
+        let languageInput = assembly.languageInput(
+            for: selectedLanguage,
+            completion: completion)
 
         assembly.window?.rootViewController?.present(languageInput, animated: true) { }
     }
