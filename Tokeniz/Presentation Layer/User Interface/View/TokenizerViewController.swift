@@ -21,7 +21,7 @@ final class TokenizerViewController: UIViewController {
 
         view.delegate = self
         view.spacing = Constants.elementSpacing
-        view.title = "Input English"
+        view.title = "Input \(Language.english.title)"
 
         return view
     }()
@@ -64,10 +64,7 @@ extension TokenizerViewController: TokenizerViewInput {
     }
 
     func didSelectLanguage(language: Language) {
-        switch language {
-        case .english: tokenizerInputView.title = "Input English"
-        case .spanish: tokenizerInputView.title = "Input Spanish"
-        }
+        tokenizerInputView.title = "Input \(language.title)"
 
         tokenizerInputView.text = ""
         tokenizerOutputView.text = ""

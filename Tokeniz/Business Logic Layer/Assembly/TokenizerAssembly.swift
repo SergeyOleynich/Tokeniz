@@ -47,11 +47,11 @@ struct TokenizerAssemblyImpl: TokenizerAssembly {
             preferredStyle: .actionSheet)
 
         let englishAction = UIAlertAction(
-            title: "\(language == .english ? "✔︎ " : "") English",
+            title: "\(language == .english ? "✔︎ " : "") \(Language.english.title)",
             style: .default) { _ in completion(.english) }
 
         let spanishAction = UIAlertAction(
-            title: "\(language == .spanish ? "✔︎ " : "") Spanish",
+            title: "\(language == .spanish ? "✔︎ " : "") \(Language.spanish.title)",
             style: .default) { _ in completion(.spanish) }
 
         let cancelAction = UIAlertAction(

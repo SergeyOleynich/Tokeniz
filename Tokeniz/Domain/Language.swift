@@ -21,4 +21,11 @@ extension Language {
             return ["si", "y"]
         }
     }
+
+    var title: String {
+        switch self {
+        case .english: "English"
+        case .spanish: "Spanish"
+        }
+    }
 }
