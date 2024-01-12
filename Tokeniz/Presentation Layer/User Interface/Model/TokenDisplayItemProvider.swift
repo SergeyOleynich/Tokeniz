@@ -11,6 +11,8 @@ protocol TokenDisplayItemProvider {
     func provideDisplayItem(for tokens: [String]) -> TokenDisplayModel
 }
 
+// MARK: - Implementation
+
 struct TokenDisplayItemProviderImpl: TokenDisplayItemProvider {
     func provideDisplayItem(for tokens: [String]) -> TokenDisplayModel {
         return .init(
