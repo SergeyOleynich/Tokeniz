@@ -7,16 +7,8 @@
 
 import Foundation
 
-extension String {
-    var firstCapitalized: String { prefix(1).capitalized + dropFirst() }
-
-    var hyphen: String {
-        "- " + self
-    }
-}
-
-struct TokenizerService {
-
+final class TokenizerService {
+    var language: Language = .english
 }
 
 // MARK: - Tokenizer
@@ -26,30 +18,25 @@ extension TokenizerService: Tokenizer {
         var buffer: String = ""
         var tokens: [String] = []
 
-        text.enumerateSubstrings(in: text.startIndex..., options: .byCaretPositions) { substring, substringRange, enclosingRange, _ in
+        text.enumerateSubstrings(
+            in: text.startIndex...,
+            options: .byCaretPositions
+        ) { [weak self] substring, substringRange, _, _ in
 
-            guard let substring = substring else { return }
+            guard let self = self, let substring = substring else { return }
 
             buffer.append(substring)
 
-            if buffer.hasSuffix("and") {
-                buffer = String(
-                    buffer
-                        .dropLast(3)
-                        .trimmingCharacters(in: .whitespacesAndNewlines)
-                )
-                tokens.append(buffer)
-                buffer = "and"
-            }
-
-            if buffer.hasSuffix("if") {
-                buffer = String(
-                    buffer
-                        .dropLast(2)
-                        .trimmingCharacters(in: .whitespacesAndNewlines)
-                )
-                tokens.append(buffer)
-                buffer = "if"
+            self.language.delimiter.forEach { delimiter in
+                if buffer.hasSuffix(delimiter) {
+                    buffer = String(
+                        buffer
+                            .dropLast(delimiter.count)
+                            .trimmingCharacters(in: .whitespacesAndNewlines)
+                    )
+                    tokens.append(buffer)
+                    buffer = delimiter
+                }
             }
 
             if substringRange.upperBound == text.endIndex {
