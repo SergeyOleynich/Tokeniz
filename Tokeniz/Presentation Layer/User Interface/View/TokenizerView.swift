@@ -20,6 +20,18 @@ final class TokenizerView: UIView {
         }
     }
 
+    var text: String = "" {
+        didSet {
+            textView.text = text
+        }
+    }
+
+    weak var delegate: UITextViewDelegate? {
+        didSet {
+            textView.delegate = delegate
+        }
+    }
+
     override var isUserInteractionEnabled: Bool {
         didSet {
             textView.isEditable = isUserInteractionEnabled
@@ -39,6 +51,7 @@ final class TokenizerView: UIView {
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel(frame: .zero)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.textColor = UIColor.label
 
         return titleLabel
     }()

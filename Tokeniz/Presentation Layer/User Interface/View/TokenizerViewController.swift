@@ -19,13 +19,14 @@ final class TokenizerViewController: UIViewController {
         let view = TokenizerView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
 
+        view.delegate = self
         view.spacing = Constants.elementSpacing
         view.title = "Input"
 
         return view
     }()
 
-    private lazy var tokenizerOutputView: UIView = {
+    private lazy var tokenizerOutputView: TokenizerView = {
         let view = TokenizerView(frame: .zero)
         view.translatesAutoresizingMaskIntoConstraints = false
 
@@ -38,7 +39,8 @@ final class TokenizerViewController: UIViewController {
 
     override func loadView() {
         let contentView = UIView()
-
+        contentView.backgroundColor = UIColor.systemBackground
+        
         contentView.addSubview(tokenizerInputView)
         contentView.addSubview(tokenizerOutputView)
 
@@ -57,7 +59,9 @@ final class TokenizerViewController: UIViewController {
 // MARK: - TokenizerViewInput
 
 extension TokenizerViewController: TokenizerViewInput {
-
+    func didProcessItem(item: TokenDisplayModel) {
+        tokenizerOutputView.text = item.displayString
+    }
 }
 
 // MARK: - UITextViewDelegate
@@ -89,7 +93,7 @@ private extension TokenizerViewController {
             tokenizerOutputView.topAnchor.constraint(equalTo: tokenizerInputView.bottomAnchor, constant: Constants.elementSpacing),
             tokenizerOutputView.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
             tokenizerOutputView.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
-            tokenizerOutputView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor)
+            tokenizerOutputView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -Constants.elementSpacing)
         ])
     }
 
