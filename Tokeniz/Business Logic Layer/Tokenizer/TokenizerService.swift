@@ -28,7 +28,9 @@ extension TokenizerService: Tokenizer {
             buffer.append(substring)
 
             self.language.delimiter.forEach { delimiter in
-                if buffer.suffix(delimiter.count).lowercased() == delimiter && buffer[buffer.index(buffer.endIndex, offsetBy: -delimiter.count - 1)] == " " {
+                if buffer.suffix(delimiter.count).lowercased() == delimiter, 
+                    let index = buffer.index(buffer.endIndex, offsetBy: -delimiter.count - 1, limitedBy: buffer.startIndex),
+                    buffer[index] == " " {
                     buffer = String(
                         buffer
                             .dropLast(delimiter.count)
