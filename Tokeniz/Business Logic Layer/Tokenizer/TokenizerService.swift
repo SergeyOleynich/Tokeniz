@@ -28,7 +28,7 @@ extension TokenizerService: Tokenizer {
             buffer.append(substring)
 
             self.language.delimiter.forEach { delimiter in
-                if buffer.hasSuffix(delimiter) {
+                if buffer.suffix(delimiter.count).lowercased() == delimiter && buffer[buffer.index(buffer.endIndex, offsetBy: -delimiter.count - 1)] == " " {
                     buffer = String(
                         buffer
                             .dropLast(delimiter.count)
