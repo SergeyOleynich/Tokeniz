@@ -9,6 +9,7 @@ import Foundation
 
 final class TokenizerPresenter {
     weak var viewInput: TokenizerViewInput?
+    var router: TokenizerRouter?
 
     private let tokenizer: Tokenizer
     private let displayItemProvider: TokenDisplayItemProvider
@@ -27,5 +28,9 @@ extension TokenizerPresenter: TokenizerViewOutput {
         let displayModel = displayItemProvider.provideDisplayItem(for: tokens)
 
         viewInput?.didProcessItem(item: displayModel)
+    }
+
+    func onLanguageTapped() {
+        router?.presentLanguageSelection()
     }
 }

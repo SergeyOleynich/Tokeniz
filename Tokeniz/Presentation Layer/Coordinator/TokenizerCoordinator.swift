@@ -12,6 +12,10 @@ protocol TokenizerCoordinator {
     func start()
 }
 
+protocol TokenizerRouter {
+    func presentLanguageSelection()
+}
+
 // MARK: - Implementation
 
 struct TokenizerCoordinatorImpl: TokenizerCoordinator {
@@ -22,8 +26,20 @@ struct TokenizerCoordinatorImpl: TokenizerCoordinator {
     }
 
     func start() {
+        let moduleInput = assembly.moduleInput
         assembly.window?.rootViewController = UINavigationController(
-            rootViewController: assembly.moduleInput)
+            rootViewController: moduleInput.viewController)
+        moduleInput.presenter.router = self
         assembly.window?.makeKeyAndVisible()
+    }
+}
+
+// MARK: - TokenizerRouter
+
+extension TokenizerCoordinatorImpl: TokenizerRouter {
+    func presentLanguageSelection() {
+        let languageInput = assembly.languageInput
+
+        assembly.window?.rootViewController?.present(languageInput, animated: true) { }
     }
 }

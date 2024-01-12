@@ -9,4 +9,5 @@ import Foundation
 
 protocol TokenizerViewOutput {
     func onTextDidChanged(text: String)
+    func onLanguageTapped()
 }
